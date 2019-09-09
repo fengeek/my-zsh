@@ -35,10 +35,25 @@ git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerl
 git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-history-substring-search ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+# Only if you want to use NVM as Oh-My-Zsh plugin
 git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
 ```
 
 # Zsh config
 ```bash
 cd && curl -fLo ".zshrc" https://github.com/miaborde/my-zsh/raw/master/.zshrc
+# Then adapt according to your needs...
+# delete nvm in plugins section if you do not use it
+```
+
+# NVM as Oh-My-Zsh plugin
+Same use, reminder :
+
+```bash
+# List available Node.js versions
+nvm ls-remote
+# Install LTS version (example)
+nvm install v10.16.0
+# Display currently activated version
+nvm current
 ```
