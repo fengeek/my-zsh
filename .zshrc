@@ -55,7 +55,7 @@ plugins=(
 # Oh my zsh ------------------------------------------------------------------ #
 source $ZSH/oh-my-zsh.sh
 # Aliases -------------------------------------------------------------------- #
-alias cdp="cd ~/Documents && ls"
+alias cdp="cd ~/Documents/Projets && ls"
 mcode() { code ~/Documents/Projets/"$1" && exit }
 mgit() { git add . && git commit -m "$1" && git push }
 alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
@@ -65,6 +65,12 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 lt() { lsd --tree --depth=$1 }
+# Android SDK ---------------------------------------------------------------- #
+export ANDROID_HOME="$HOME/Android/Sdk"
+export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
+PATH=$PATH:$ANDROID_HOME/tools; PATH=$PATH:$ANDROID_HOME/platform-tools
+alias android='$ANDROID_HOME/tools/android'
+alias emulator='$ANDROID_HOME/tools/emulator'
 # Plugin HighLight config ---------------------------------------------------- #
 # gold1 = 220
 # seagreen = 043
