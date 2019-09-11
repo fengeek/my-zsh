@@ -30,16 +30,16 @@ POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND='lightcoral'
 POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND='lightpink4'
 # Dir ------------------------------------------------------------------------ #
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
-POWERLEVEL9K_DIR_HOME_BACKGROUND='aquamarine3'
+POWERLEVEL9K_DIR_HOME_BACKGROUND='seagreen3'
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='gold1'
 POWERLEVEL9K_DIR_ETC_BACKGROUND='salmon1'
 POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='lightcoral'
 # Status --------------------------------------------------------------------- #
 POWERLEVEL9K_STATUS_CROSS=true
-POWERLEVEL9K_STATUS_OK_FOREGROUND='gold1'
+POWERLEVEL9K_STATUS_OK_FOREGROUND='seagreen3'
 # Vcs ------------------------------------------------------------------------ #
 POWERLEVEL9K_VCS_BRANCH_ICON=''
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='aquamarine3'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='seagreen3'
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='black'
 POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='204'
 POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='black'
@@ -51,27 +51,45 @@ plugins=(
     zsh-autosuggestions
     # zsh-history-substring-search
     zsh-syntax-highlighting
-    zsh-nvm
 )
-# Zsh-Nvm plugin lazy loading
-export NVM_LAZY_LOAD=true
 # Oh my zsh ------------------------------------------------------------------ #
 source $ZSH/oh-my-zsh.sh
 # Aliases -------------------------------------------------------------------- #
-alias cdp="cd ~/Documents/Projets && ls"
+alias cdp="cd ~/Documents && ls"
 mcode() { code ~/Documents/Projets/"$1" && exit }
 mgit() { git add . && git commit -m "$1" && git push }
 alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
 alias c="clear"
-alias tor="~/Téléchargements/tor-browser_en-US/Browser/start-tor-browser"
 alias ls='lsd'
 alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 lt() { lsd --tree --depth=$1 }
-# Android SDK ---------------------------------------------------------------- #
-export ANDROID_HOME="$HOME/Android/Sdk"
-export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
-PATH=$PATH:$ANDROID_HOME/tools; PATH=$PATH:$ANDROID_HOME/platform-tools
-alias android='$ANDROID_HOME/tools/android'
-alias emulator='$ANDROID_HOME/tools/emulator'
+# Plugin HighLight config ---------------------------------------------------- #
+# gold1 = 220
+# seagreen = 043
+ZSH_HIGHLIGHT_STYLES[alias]='fg=043'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=043'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=043'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=220,bold'
+ZSH_HIGHLIGHT_STYLES[command]='fg=043'
+ZSH_HIGHLIGHT_STYLES[function]='fg=043'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=043'
+# ZSH_HIGHLIGHT_STYLES[default]='fg=078'
+# ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+# ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=220'
+# ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[path]='fg=081'
+# ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
+# ZSH_HIGHLIGHT_STYLES[path_approx]='fg=yellow'
+# ZSH_HIGHLIGHT_STYLES[globbing]='fg=green'
+# ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=green'
+# ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=magenta'
+# ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=red'
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=086'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=086'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=086'
+# ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
+# ZSH_HIGHLIGHT_STYLES[assign]='none'
