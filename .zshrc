@@ -2,7 +2,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 # Customise the Powerlevel9k prompts ----------------------------------------- #
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery dir_writable dir node_version php_version go_version rust_version swift_version newline status vcs docker_machine)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery time dir_writable dir node_version php_version go_version rust_version swift_version newline status vcs docker_machine)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # OS Icon -------------------------------------------------------------------- #
 POWERLEVEL9K_OS_ICON_FOREGROUND="gold1"
@@ -45,6 +45,12 @@ POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='204'
 POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='black'
 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='gold1'
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
+# Time ----------------------------------------------------------------------- #
+POWERLEVEL9K_TIME_ICON=""
+POWERLEVEL9K_TIME_FOREGROUND="black"
+POWERLEVEL9K_TIME_BACKGROUND="gold1"
+# POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m}"
+POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M}"
 # Plugins -------------------------------------------------------------------- #
 plugins=(
     sudo git docker fedora history systemd ng node vscode
@@ -57,8 +63,15 @@ source $ZSH/oh-my-zsh.sh
 # Aliases -------------------------------------------------------------------- #
 alias cdp="cd ~/Documents/Projets && ls"
 mcode() { code ~/Documents/Projets/"$1" && exit }
-mgit() { git add . && git commit -m "$1" && git push }
+gnew() { git add . && git commit -m "📦 $1" && git push }
+gimprove() { git add . && git commit -m "👌 $1" && git push }
+gfix() { git add . && git commit -m "🐛 $1" && git push }
+gdoc() { git add . && git commit -m "📖 $1" && git push }
+grelease() { git add . && git commit -m "🚀 $1" && git push }
+gtest() { git add . && git commit -m "✅ $1" && git push }
 alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
+alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
+alias x="exit"
 alias c="clear"
 alias ls='lsd'
 alias l='ls -l'
