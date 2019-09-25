@@ -63,14 +63,6 @@ source $ZSH/oh-my-zsh.sh
 # Aliases -------------------------------------------------------------------- #
 alias cdp="cd ~/Documents/Projets && ls"
 mcode() { code ~/Documents/Projets/"$1" && exit }
-gnew() { git add . && git commit -m "📦 $1" && git push }
-gimprove() { git add . && git commit -m "👌 $1" && git push }
-gfix() { git add . && git commit -m "🐛 $1" && git push }
-gdoc() { git add . && git commit -m "📖 $1" && git push }
-grelease() { git add . && git commit -m "🚀 $1" && git push }
-gtest() { git add . && git commit -m "✅ $1" && git push }
-alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
-alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
 alias x="exit"
 alias c="clear"
 alias ls='lsd'
@@ -78,12 +70,25 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 lt() { lsd --tree --depth=$1 }
+ginit() { git add . && git commit -m "🎉 $1" && git push }
+gnew() { git add . && git commit -m "✨ $1" && git push }
+gimprove() { git add . && git commit -m "👌 $1" && git push }
+gfix() { git add . && git commit -m "🐛 $1" && git push }
+gdoc() { git add . && git commit -m "📖 $1" && git push }
+gdocker() { git add . && git commit -m "🐳 $1" && git push }
+gadd() { git add . && git commit -m "📦 $1" && git push }
+glock() { git add . && git commit -m "🔒 $1" && git push }
+grelease() { git add . && git commit -m "🚀 $1" && git push }
+gtest() { git add . && git commit -m "✅ $1" && git push }
+gwork() { git add . && git commit -m "🚧 $1" && git push }
+alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
+alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
 # Android SDK ---------------------------------------------------------------- #
-export ANDROID_HOME="$HOME/Android/Sdk"
-export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
-PATH=$PATH:$ANDROID_HOME/tools; PATH=$PATH:$ANDROID_HOME/platform-tools
-alias android='$ANDROID_HOME/tools/android'
-alias emulator='$ANDROID_HOME/tools/emulator'
+# export ANDROID_HOME="$HOME/Android/Sdk"
+# export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
+# PATH=$PATH:$ANDROID_HOME/tools; PATH=$PATH:$ANDROID_HOME/platform-tools
+# alias android='$ANDROID_HOME/tools/android'
+# alias emulator='$ANDROID_HOME/tools/emulator'
 # Plugin HighLight config ---------------------------------------------------- #
 # gold1 = 220
 # seagreen = 043
