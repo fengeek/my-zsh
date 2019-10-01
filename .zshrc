@@ -2,7 +2,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 # Customise the Powerlevel9k prompts ----------------------------------------- #
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(battery time dir_writable dir node_version php_version go_version rust_version swift_version newline status vcs docker_machine)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable dir node_version php_version go_version rust_version swift_version newline status vcs docker_machine)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # OS Icon -------------------------------------------------------------------- #
 POWERLEVEL9K_OS_ICON_FOREGROUND="gold1"
@@ -57,6 +57,7 @@ plugins=(
     zsh-autosuggestions
     # zsh-history-substring-search
     zsh-syntax-highlighting
+    # zsh-nvm
 )
 # Oh my zsh ------------------------------------------------------------------ #
 source $ZSH/oh-my-zsh.sh
