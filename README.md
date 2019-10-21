@@ -2,6 +2,15 @@
 
 Guide to install Zsh + Oh-my-Zsh + PowerLevel10k + NerdFonts + some CLI utils for an awesome shell.
 
+---
+
+<p align="center">
+  <img height="250" src="./capture.png">
+  <br>
+</p>
+
+---
+
 ## 👨‍💻 Zsh
 
 📖 https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH
@@ -58,6 +67,14 @@ Put the .zshrc at the root of your home directory, for example via command line:
 ```bash
 cd && curl -fLo ".zshrc" https://github.com/miaborde/my-zsh/raw/master/.zshrc
 # uncomment zsh-nvm in plugins section if you use it.
+```
+
+## 🔧 Changing monospace fonts system-wide
+
+For Gnome (Linux) users only :
+
+```bash
+gsettings set org.gnome.desktop.interface monospace-font-name 'FuraCode Nerd Font Regular 14'
 ```
 
 ## 🕹 Enjoy
