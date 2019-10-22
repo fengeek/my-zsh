@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------- #
 # Your variables ------------------------------------------------------------- #
 YOUR_GITHUB="https://github.com/mIaborde"
-YOUR_PROJECT_FOLDER="$HOME/Documents/Projets"
+YOUR_PROJECT_FOLDER="$HOME/Documents"
 # Oh-My-Zsh ------------------------------------------------------------------ #
 export ZSH="$HOME/.oh-my-zsh"
 # Plugins
@@ -185,39 +185,45 @@ ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[assign]='fg='$COLOR_SECONDARY
-# Aliases -------------------------------------------------------------------- #
-alias cdp="cd ~/Documents/Projets && ls"
-mcode() { code ~/Documents/Projets/"$1" && exit }
+# Aliases & functions -------------------------------------------------------- #
+# lsd
+alias ls='lsd'
+alias la='ls -A'
+alias lsa='ls -lA'
+lt() { lsa --tree --depth=$1 2>/dev/null || lsd --tree --depth=1 }
+lta() { lsa --tree --depth=$1 -A 2>/dev/null || lsd --tree --depth=1 -A }
+# shortcuts
 alias x="exit"
 alias c="clear"
-# lsd aliases & functions
-alias ls='lsd'
-lt() { lsd --tree --depth=$1 }
-# git aliases & functions
-gitinit() { git add . && git commit -m "🎉 Init: $1" && git push }
-gitimprove() { git add . && git commit -m "👌 Improve: $1" && git push }
-gitfeature() { git add . && git commit -m "✨ Feature: $1" && git push }
-gitrelease() { git add . && git commit -m "🚀 Release: $1" && git push }
-gtest() { git add . && git commit -m "✅ Test: $1" && git push }
-gitwip() { git add . && git commit -m "🚧 Wip: $1" && git push }
-gitfix() { git add . && git commit -m "🐛 Fix: $1" && git push }
-gitdoc() { git add . && git commit -m "📖 Doc: $1" && git push }
-gitadd() { git add . && git commit -m "📦 Add: $1" && git push }
-gitperf() { git add . && git commit -m "⚡️ Perf: $1" && git push }
-gitbreak() { git add . && git commit -m "💥 Break: $1" && git push }
-gitremove() { git add . && git commit -m "🔥 Remove: $1" && git push }
-gitsecure() { git add . && git commit -m "🔒 Secure: $1" && git push }
-gitdocker() { git add . && git commit -m "🐳 Docker: $1" && git push }
-gitformat() { git add . && git commit -m "🎨 Format: $1" && git push }
-gitconfig() { git add . && git commit -m "🔧 Config: $1" && git push }
+cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ls }
+codep() { code $YOUR_PROJECT_FOLDER"/$1" && exit }
+mkcd() { mkdir -p "$1" && cd "$1" }
+# git
+alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
+alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
+gacm() { git add . && git commit -m "$1" }
+gitinit() { gacm "🎉 Init: $1" }
+gitimprove() { gacm "👌 Improve: $1" }
+gitfeature() { gacm "✨ Feature: $1" }
+gitrelease() { gacm "🚀 Release: $1" }
+gittest() { gacm "✅ Test: $1" }
+gitwip() { gacm "🚧 Wip: $1" }
+gitfix() { gacm "🐛 Fix: $1" }
+gitdoc() { gacm "📖 Doc: $1" }
+gitadd() { gacm "📦 Add: $1" }
+gitperf() { gacm "⚡️ Perf: $1" }
+gitbreak() { gacm "💥 Break: $1" }
+gitremove() { gacm "🔥 Remove: $1" }
+gitsecure() { gacm "🔒 Secure: $1" }
+gitdocker() { gacm "🐳 Docker: $1" }
+gitformat() { gacm "🎨 Format: $1" }
+gitconfig() { gacm "🔧 Config: $1" }
 github() {
     xdg-open "$YOUR_GITHUB/$1" 2>/dev/null ||
     gnome-open "$YOUR_GITHUB/$1" 2>/dev/null ||
     open "$YOUR_GITHUB/$1" 2>/dev/null ||
     echo "You need xdg-open, gnome-open or open to use this alias..."
 }
-alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
-alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
 # Android SDK ---------------------------------------------------------------- #
 # export ANDROID_HOME="$HOME/Android/Sdk"
 # export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
