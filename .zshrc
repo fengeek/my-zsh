@@ -1,7 +1,17 @@
 # ---------------------------------------------------------------------------- #
 #                                    .zshrc                                    #
 # ---------------------------------------------------------------------------- #
+# Your variables ------------------------------------------------------------- #
+YOUR_GITHUB="https://github.com/mIaborde"
+YOUR_PROJECT_FOLDER="$HOME/Documents/Projets"
+# Oh-My-Zsh ------------------------------------------------------------------ #
 export ZSH="$HOME/.oh-my-zsh"
+# Plugins
+plugins=(
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    # zsh-nvm
+)
 # Powerlevel9k --------------------------------------------------------------- #
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"
@@ -11,10 +21,11 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     newline status vcs
 )
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    #time host custom_info newline
-    #node_version php_version_joined symfony2_version_joined laravel_version_joined swift_version_joined go_version_joined rust_version_joined custom_dev
-    #public_ip_joined ip_joined
-    #load_joined battery_joined disk_usage_joined ram_joined custom_hardware
+    # time host custom_info newline
+    # heavy : # node_version php_version_joined symfony2_version_joined laravel_version_joined
+    # heavy : # swift_version_joined go_version_joined rust_version_joined
+    # heavy : # custom_dev
+    # load battery_joined disk_usage_joined ram_joined custom_hardware
 )
 ZLE_RPROMPT_INDENT=0 # Fix final space for right prompt
 # Colors --------------------------------------------------------------------- #
@@ -148,15 +159,8 @@ POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND=$COLOR_BLACK
 POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND=$COLOR_OK
 POWERLEVEL9K_BATTERY_VERBOSE="false"
 POWERLEVEL9K_BATTERY_STAGES=($'\uf244 ' $'\uf243 ' $'\uf242 ' $'\uf241 ' $'\uf240 ') # 
-# Oh my zsh ------------------------------------------------------------------ #
+# Zsh-syntax-highlighting config --------------------------------------------- #
 source $ZSH/oh-my-zsh.sh
-# Plugins
-plugins=(
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    # zsh-nvm
-)
-# Plugin HighLight config
 ZSH_HIGHLIGHT_STYLES[comment]='fg='$COLOR_COMMENT
 ZSH_HIGHLIGHT_STYLES[alias]='fg='$COLOR_OK
 ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg='$COLOR_OK
@@ -206,6 +210,12 @@ gitsecure() { git add . && git commit -m "🔒 Secure: $1" && git push }
 gitdocker() { git add . && git commit -m "🐳 Docker: $1" && git push }
 gitformat() { git add . && git commit -m "🎨 Format: $1" && git push }
 gitconfig() { git add . && git commit -m "🔧 Config: $1" && git push }
+github() {
+    xdg-open "$YOUR_GITHUB/$1" 2>/dev/null ||
+    gnome-open "$YOUR_GITHUB/$1" 2>/dev/null ||
+    open "$YOUR_GITHUB/$1" 2>/dev/null ||
+    echo "You need xdg-open, gnome-open or open to use this alias..."
+}
 alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
 alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
 # Android SDK ---------------------------------------------------------------- #
