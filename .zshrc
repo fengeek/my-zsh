@@ -4,6 +4,16 @@
 # Your variables ------------------------------------------------------------- #
 YOUR_GITHUB="https://github.com/mIaborde"
 YOUR_PROJECT_FOLDER="$HOME/Documents"
+# https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
+COLOR_PRIMARY="220" # gold1
+COLOR_SECONDARY="075" # steelblue1
+COLOR_OK="042" # seagreen3
+COLOR_WARNING="228" # gold1
+COLOR_ERROR="009" # lightred
+COLOR_DENIED="210" # lightcoral
+COLOR_FLAG="228" # cornsilk1
+COLOR_BLACK="000" # black
+COLOR_COMMENT="103" # lightslategrey
 # Oh-My-Zsh ------------------------------------------------------------------ #
 export ZSH="$HOME/.oh-my-zsh"
 # Plugins
@@ -28,17 +38,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # load battery_joined disk_usage_joined ram_joined custom_hardware
 )
 ZLE_RPROMPT_INDENT=0 # Fix final space for right prompt
-# Colors --------------------------------------------------------------------- #
-# https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
-COLOR_PRIMARY="220" # gold1
-COLOR_SECONDARY="075" # steelblue1
-COLOR_OK="042" # seagreen3
-COLOR_WARNING="228" # gold1
-COLOR_ERROR="009" # lightred
-COLOR_DENIED="210" # lightcoral
-COLOR_FLAG="228" # cornsilk1
-COLOR_BLACK="000" # black
-COLOR_COMMENT="103" # lightslategrey
 # Left prompt ---------------------------------------------------------------- #
 # OS icon
 POWERLEVEL9K_OS_ICON_FOREGROUND=$COLOR_BLACK
@@ -201,23 +200,31 @@ mkcd() { mkdir -p "$1" && cd "$1" }
 # git
 alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
 alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
-gacm() { git add . && git commit -m "$1" }
-gitinit() { gacm "🎉 Init: $1" }
-gitimprove() { gacm "👌 Improve: $1" }
-gitfeature() { gacm "✨ Feature: $1" }
-gitrelease() { gacm "🚀 Release: $1" }
-gittest() { gacm "✅ Test: $1" }
-gitwip() { gacm "🚧 Wip: $1" }
-gitfix() { gacm "🐛 Fix: $1" }
-gitdoc() { gacm "📖 Doc: $1" }
-gitadd() { gacm "📦 Add: $1" }
-gitperf() { gacm "⚡️ Perf: $1" }
-gitbreak() { gacm "💥 Break: $1" }
-gitremove() { gacm "🔥 Remove: $1" }
-gitsecure() { gacm "🔒 Secure: $1" }
-gitdocker() { gacm "🐳 Docker: $1" }
-gitformat() { gacm "🎨 Format: $1" }
-gitconfig() { gacm "🔧 Config: $1" }
+gc() {
+  type="$1"
+  detail="$2"
+  shift
+  case "$type" in
+    init)    git commit -m "🎉 Init: $detail" ;;
+    improve) git commit -m "👌 Improve: $detail" ;;
+    feature) git commit -m "✨ Feature: $detail" ;;
+    release) git commit -m "🚀 Release: $detail" ;;
+    test)    git commit -m "✅ Test: $detail" ;;
+    wip)     git commit -m "🚧 Wip: $detail" ;;
+    fix)     git commit -m "🐛 Fix: $detail" ;;
+    doc)     git commit -m "📖 Doc: $detail" ;;
+    add)     git commit -m "📦 Add: $detail" ;;
+    perf)    git commit -m "⚡️ Perf: $detail" ;;
+    break)   git commit -m "💥 Break: $detail" ;;
+    remove)  git commit -m "🔥 Remove: $detail" ;;
+    secure)  git commit -m "🔒 Secure: $detail" ;;
+    docker)  git commit -m "🐳 Docker: $detail" ;;
+    format)  git commit -m "🎨 Format: $detail" ;;
+    config)  git commit -m "🔧 Config: $detail" ;;
+    *) echo "Unrecognized commit type: '$type'" >&2; ;;
+  esac
+  echo $commit
+}
 github() {
     xdg-open "$YOUR_GITHUB/$1" 2>/dev/null ||
     gnome-open "$YOUR_GITHUB/$1" 2>/dev/null ||
