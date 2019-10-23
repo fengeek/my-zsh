@@ -200,7 +200,7 @@ mkcd() { mkdir -p "$1" && cd "$1" }
 # git
 alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
 alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
-gc() {
+gc() { # usage : gc fix "fix detail"
   type="$1"
   detail="$2"
   shift
@@ -225,6 +225,9 @@ gc() {
   esac
   echo $commit
 }
+ga() { git add . }
+gac() { git add . && gc $1 $2 }
+gacp() { git add . && gc $1 $2 && git push }
 github() {
     xdg-open "$YOUR_GITHUB/$1" 2>/dev/null ||
     gnome-open "$YOUR_GITHUB/$1" 2>/dev/null ||
