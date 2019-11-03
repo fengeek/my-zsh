@@ -74,7 +74,7 @@ cd && curl -fLo ".zshrc" https://github.com/miaborde/my-zsh/raw/master/.zshrc
 For Gnome (Linux) users only :
 
 ```bash
-gsettings set org.gnome.desktop.interface monospace-font-name 'FuraCode Nerd Font Regular 14'
+gsettings set org.gnome.desktop.interface monospace-font-name 'FiraCode Nerd Font Regular 14'
 ```
 
 ## 🕹 Enjoy
