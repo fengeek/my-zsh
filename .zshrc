@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------- #
 # Your variables ------------------------------------------------------------- #
 YOUR_GITHUB="https://github.com/mIaborde"
-YOUR_PROJECT_FOLDER="$HOME/Documents"
+YOUR_PROJECT_FOLDER="$HOME/Projets"
 # https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
 COLOR_PRIMARY="220" # gold1
 COLOR_SECONDARY="075" # steelblue1
@@ -62,7 +62,6 @@ POWERLEVEL9K_DIR_DEFAULT_BACKGROUND=$COLOR_DENIED
 POWERLEVEL9K_STATUS_CROSS=true
 POWERLEVEL9K_STATUS_OK_FOREGROUND=$COLOR_BLACK
 POWERLEVEL9K_STATUS_OK_BACKGROUND=$COLOR_OK
-POWERLEVEL9K_STATUS_OK_ICON=$'\uF155' # 
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND=$COLOR_BLACK
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND=$COLOR_ERROR
 POWERLEVEL9K_STATUS_VERBOSE="true"
