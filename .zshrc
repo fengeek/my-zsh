@@ -31,10 +31,9 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     newline status vcs
 )
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    # time host custom_info newline
-    # heavy : # node_version php_version_joined symfony2_version_joined laravel_version_joined
-    # heavy : # swift_version_joined go_version_joined rust_version_joined
-    # heavy : # custom_dev
+    # node_version custom_dev time host custom_info newline
+      # php_version_joined symfony2_version_joined laravel_version_joined
+      # swift_version_joined go_version_joined rust_version_joined
     # load battery_joined disk_usage_joined ram_joined custom_hardware
 )
 ZLE_RPROMPT_INDENT=0 # Fix final space for right prompt
@@ -185,14 +184,16 @@ ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[assign]='fg='$COLOR_SECONDARY
 # Aliases & functions -------------------------------------------------------- #
 # lsd
-l() { lsd }
-la() { lsd -A }
-ll() { lsd -l }
-lla() { lsd -lA }
-lt() { lsd --tree --depth $1 || lsd --tree --depth 1 }
-lta() { lsd --tree --depth $1 -A || lsd --tree --depth 1 -A }
+alias l="lsd"
+alias la="lsd -A"
+alias ll="lsd -l"
+alias lla="lsd -lA"
+lt() { lsd --tree --depth $1 2>/dev/null || lsd --tree --depth 1 }
+lta() { lsd --tree --depth $1 -A 2>/dev/null || lsd --tree --depth 1 -A }
 # curl
 jcurl() { curl $@ | jq -C | less -R }
+# rsync
+rcp() { rsync -avhW --no-compress --progress $1 $2 }
 # shortcuts
 alias x="exit"
 alias c="clear"
@@ -232,9 +233,9 @@ gac() { git add . && gc $1 $2 }
 gacp() { git add . && gc $1 $2 && git push }
 gls() { curl "https://api.github.com/users/$YOUR_GITHUB_USERNAME/repos" -s | jq '[.[].svn_url]' }
 gh() {
-  xdg-open "https://github.com/$YOUR_GITHUB_USERNAME/$option" 2>/dev/null ||
-  gnome-open "https://github.com/$YOUR_GITHUB_USERNAME/$option" 2>/dev/null ||
-  open "https://github.com/$YOUR_GITHUB_USERNAME/$option" 2>/dev/null ||
+  xdg-open "https://github.com/$YOUR_GITHUB_USERNAME/$1" 2>/dev/null ||
+  gnome-open "https://github.com/$YOUR_GITHUB_USERNAME/$1" 2>/dev/null ||
+  open "https://github.com/$YOUR_GITHUB_USERNAME/$1" 2>/dev/null ||
   echo "You need xdg-open, gnome-open or open to use this alias..."
 }
 # Android SDK ---------------------------------------------------------------- #

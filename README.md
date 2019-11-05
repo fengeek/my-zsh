@@ -29,7 +29,7 @@ brew install zsh lsd jq
 📖 https://github.com/robbyrussell/oh-my-zsh
 
 ```bash
-# ✌ all
+# ✌️ all
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
@@ -38,7 +38,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 📖 https://github.com/romkatv/powerlevel10k
 
 ```bash
-# ✌ For all
+# ✌️ For all
 git clone https://github.com/romkatv/powerlevel10k $ZSH_CUSTOM/themes/powerlevel10k
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
@@ -62,7 +62,7 @@ cd ~/.local/share/fonts
 # 🍎 OSX
 cd ~/Library/Fonts
 
-# ✌ Then for all
+# ✌️ Then for all
 curl -fLo "Fira Code Bold Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Bold/complete/Fira%20Code%20Bold%20Nerd%20Font%20Complete.ttf
 curl -fLo "Fira Code Light Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Light/complete/Fira%20Code%20Light%20Nerd%20Font%20Complete.ttf
 curl -fLo "Fira Code Medium Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Medium/complete/Fira%20Code%20Medium%20Nerd%20Font%20Complete.ttf
@@ -86,7 +86,7 @@ gsettings set org.gnome.desktop.interface monospace-font-name 'FiraCode Nerd Fon
 📖 https://github.com/lukechilds/zsh-nvm
 
 ```bash
-# ✌ For all
+# ✌️ For all
 git clone https://github.com/lukechilds/zsh-nvm $ZSH_CUSTOM/plugins/zsh-nvm
 
 # uncomment 'zsh-nvm' in your .zshrc plugins section.
