@@ -17,11 +17,11 @@ Guide to install Zsh + Oh-my-Zsh + PowerLevel10k + NerdFonts + some CLI utils fo
 
 ```bash
 # 🐧 Linux Fedora
-sudo dnf install util-linux-user zsh lsd
+sudo dnf install util-linux-user zsh lsd jq
 # 🐧 Linux Debian based (Ubuntu, Mint, Deepin...)
-sudo apt install zsh lsd
+sudo apt install zsh lsd jq
 # 🍎 OSX
-brew install zsh lsd
+brew install zsh lsd jq
 ```
 
 ## 📦 Oh-My-Zsh

@@ -2,7 +2,7 @@
 #                                    .zshrc                                    #
 # ---------------------------------------------------------------------------- #
 # Your variables ------------------------------------------------------------- #
-YOUR_GITHUB="https://github.com/mIaborde"
+YOUR_GITHUB_USERNAME="miaborde"
 YOUR_PROJECT_FOLDER="$HOME/Projets"
 # https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
 COLOR_PRIMARY="220" # gold1
@@ -185,11 +185,14 @@ ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[assign]='fg='$COLOR_SECONDARY
 # Aliases & functions -------------------------------------------------------- #
 # lsd
-alias ls='lsd'
-alias la='ls -A'
-alias lsa='ls -lA'
-lt() { lsa --tree --depth=$1 2>/dev/null || lsd --tree --depth=1 }
-lta() { lsa --tree --depth=$1 -A 2>/dev/null || lsd --tree --depth=1 -A }
+l() { lsd }
+la() { lsd -A }
+ll() { lsd -l }
+lla() { lsd -lA }
+lt() { lsd --tree --depth $1 || lsd --tree --depth 1 }
+lta() { lsd --tree --depth $1 -A || lsd --tree --depth 1 -A }
+# curl
+jcurl() { curl $@ | jq -C | less -R }
 # shortcuts
 alias x="exit"
 alias c="clear"
@@ -197,9 +200,9 @@ cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ls }
 codep() { code $YOUR_PROJECT_FOLDER"/$1" && exit }
 mkcd() { mkdir -p "$1" && cd "$1" }
 # git
-alias glog="git log --graph --abbrev-commit --decorate --date=relative --all"
-alias glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'"
-gc() { # usage : gc fix "fix detail"
+glog() { "git log --graph --abbrev-commit --decorate --date=relative --all" }
+glg() { "git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'" }
+gc() { # usage : gc fix "commit message"
   type="$1"
   detail="$2"
   shift
@@ -227,11 +230,12 @@ gc() { # usage : gc fix "fix detail"
 ga() { git add . }
 gac() { git add . && gc $1 $2 }
 gacp() { git add . && gc $1 $2 && git push }
-github() {
-    xdg-open "$YOUR_GITHUB/$1" 2>/dev/null ||
-    gnome-open "$YOUR_GITHUB/$1" 2>/dev/null ||
-    open "$YOUR_GITHUB/$1" 2>/dev/null ||
-    echo "You need xdg-open, gnome-open or open to use this alias..."
+gls() { curl "https://api.github.com/users/$YOUR_GITHUB_USERNAME/repos" -s | jq '[.[].svn_url]' }
+gh() {
+  xdg-open "https://github.com/$YOUR_GITHUB_USERNAME/$option" 2>/dev/null ||
+  gnome-open "https://github.com/$YOUR_GITHUB_USERNAME/$option" 2>/dev/null ||
+  open "https://github.com/$YOUR_GITHUB_USERNAME/$option" 2>/dev/null ||
+  echo "You need xdg-open, gnome-open or open to use this alias..."
 }
 # Android SDK ---------------------------------------------------------------- #
 # export ANDROID_HOME="$HOME/Android/Sdk"
