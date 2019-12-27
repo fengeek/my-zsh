@@ -184,26 +184,26 @@ ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg='$COLOR_PRIMARY
 ZSH_HIGHLIGHT_STYLES[assign]='fg='$COLOR_SECONDARY
 # Aliases & functions -------------------------------------------------------- #
-# lsd
+# pretty ls (require lsd)
 alias l="lsd"
 alias la="lsd -A"
 alias ll="lsd -l"
 alias lla="lsd -lA"
 lt() { lsd --tree --depth $1 2>/dev/null || lsd --tree --depth 1 }
 lta() { lsd --tree --depth $1 -A 2>/dev/null || lsd --tree --depth 1 -A }
-# curl
+# pretty curl (require jq)
 jcurl() { curl $@ | jq -C | less -R }
-# rsync
-rcp() { rsync -avhW --no-compress --progress $1 $2 }
+# better cp (require rsync)
+rcp() { rsync -avhW --progress $1 $2 }
 # shortcuts
 alias x="exit"
 alias c="clear"
-cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ls }
+cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && lsd -A }
 codep() { code $YOUR_PROJECT_FOLDER"/$1" && exit }
 mkcd() { mkdir -p "$1" && cd "$1" }
 # git
-glog() { "git log --graph --abbrev-commit --decorate --date=relative --all" }
-glg() { "git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)'" }
+glog() { git log --graph --abbrev-commit --decorate --date=relative --all }
+glg() { git log --graph --abbrev-commit --decorate --format=format:'%C(bold yellow)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''%C(white)%s%C(reset) %C(dim white)- %an%C(reset)' }
 gc() { # usage : gc fix "commit message"
   type="$1"
   detail="$2"
@@ -225,6 +225,7 @@ gc() { # usage : gc fix "commit message"
     docker)  git commit -m "🐳 Docker: $detail" ;;
     format)  git commit -m "🎨 Format: $detail" ;;
     config)  git commit -m "🔧 Config: $detail" ;;
+    merge)   git commit -m "🔀 Merge: $detail" ;;
     *) echo "Unrecognized commit type: '$type'" >&2; ;;
   esac
   echo $commit
@@ -232,6 +233,7 @@ gc() { # usage : gc fix "commit message"
 ga() { git add . }
 gac() { git add . && gc $1 $2 }
 gacp() { git add . && gc $1 $2 && git push }
+gm() { git merge $1 --no-commit }
 gls() { curl "https://api.github.com/users/$YOUR_GITHUB_USERNAME/repos" -s | jq '[.[].svn_url]' }
 gh() {
   xdg-open "https://github.com/$YOUR_GITHUB_USERNAME/$1" 2>/dev/null ||
@@ -239,6 +241,7 @@ gh() {
   open "https://github.com/$YOUR_GITHUB_USERNAME/$1" 2>/dev/null ||
   echo "You need xdg-open, gnome-open or open to use this alias..."
 }
+
 # Android SDK ---------------------------------------------------------------- #
 # export ANDROID_HOME="$HOME/Android/Sdk"
 # export JAVA_HOME=$(update-alternatives --query javac | sed -n -e 's/Best: *\(.*\)\/bin\/javac/\1/p')
