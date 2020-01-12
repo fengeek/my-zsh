@@ -107,7 +107,7 @@ sudo apt install tmux
 # 🍎 OSX
 brew install tmux
 # ✌️ Then for all
-cd && curl -fLo ".zshrc" https://github.com/miaborde/my-zsh/raw/master/dotfiles/.tmux.conf
+cd && curl -fLo ".tmux.conf" https://github.com/miaborde/my-zsh/raw/master/dotfiles/.tmux.conf
 ```
 
 ## 🕹 Enjoy
