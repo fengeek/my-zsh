@@ -2,8 +2,8 @@
 #                                    .zshrc                                    #
 # ---------------------------------------------------------------------------- #
 # Your variables ------------------------------------------------------------- #
-YOUR_GITHUB_USERNAME="miaborde"
-YOUR_PROJECT_FOLDER="$HOME/Projets"
+YOUR_GITHUB_USERNAME="fengeek"
+YOUR_PROJECT_FOLDER="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MyFiles/MyGit"
 # Colors --------------------------------------------------------------------- #
 # https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
 COLOR_BLACK="000" # black
@@ -26,10 +26,49 @@ plugins=(
 # Powerlevel9k --------------------------------------------------------------- #
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"
+
+# 修改Homebrew Bottles源
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+# brew 不自动更新
+export HOMEBREW_NO_AUTO_UPDATE=true
+
+
+
+function pp(){
+    STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
+    if [ $STATUS_CODE != 200 ]; then
+        read 'proxy_ip?当前为河蟹模式模式，输入代理IP:'
+        export {http,https}_proxy=http://$proxy_ip:7890
+        export all_proxy=socks5://$proxy_ip:7891
+        STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
+        if [ $STATUS_CODE != 200 ]; then
+            echo -e '进入代理模式失败，请重新尝试'
+            export switch_proxy=0
+        else
+            export switch_proxy=1
+            echo -e '进入代理模式成功'
+        fi
+    else
+        unset {http,https,all}_proxy
+        export switch_proxy=0
+        echo -e '进入河蟹模式'
+    fi
+}
+
+function prompt_my_proxy_status(){
+    if [ $switch_proxy = 0 ]; then
+        p10k segment -f red -t "🇨🇳  河蟹"
+    else
+        p10k segment -f green -t "🌏 代理"
+    fi
+}
+
+
 # Prompt segments
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     os_icon user dir_writable dir
-    newline status vcs
+    newline my_proxy_status status vcs
 )
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # node_version custom_dev time host custom_info newline
@@ -202,7 +241,7 @@ alias l="ls"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
-cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ls -A }
+cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ll -A }
 mkcd() { mkdir -p "$1" && cd "$1" }
 # git
 glog() { git log --graph --abbrev-commit --decorate --date=relative --all }
