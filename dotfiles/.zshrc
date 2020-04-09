@@ -33,8 +33,6 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 # brew 不自动更新
 export HOMEBREW_NO_AUTO_UPDATE=true
 
-
-
 function pp(){
     STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
     if [ $STATUS_CODE != 200 ]; then
@@ -57,10 +55,14 @@ function pp(){
 }
 
 function prompt_my_proxy_status(){
-    if [ $switch_proxy = 0 ]; then
+    if [ -z $all_proxy ]; then
         p10k segment -f red -t "🇨🇳  河蟹"
     else
-        p10k segment -f green -t "🌏 代理"
+        if [ $all_proxy = '' ]; then
+            p10k segment -f red -t "🇨🇳  河蟹"
+        else
+            p10k segment -f green -t "🌏 代理"
+        fi
     fi
 }
 
