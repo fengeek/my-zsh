@@ -2,6 +2,8 @@
 #                                    .zshrc                                    #
 # ---------------------------------------------------------------------------- #
 # Your variables ------------------------------------------------------------- #
+HIST_STAMPS="yyyy-mm-dd" # history 命令查看历史输入命令的时间展示格式
+
 YOUR_GITHUB_USERNAME="fengeek"
 YOUR_PROJECT_FOLDER="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MyFiles/MyGit"
 # Colors --------------------------------------------------------------------- #
@@ -18,25 +20,43 @@ COLOR_COMMENTS="000,bold" # brightblack
 # Oh-My-Zsh ------------------------------------------------------------------ #
 export ZSH="$HOME/.oh-my-zsh"
 # Plugins
-plugins=(
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    # zsh-nvm
-)
+if [ "$(uname)" = "Darwin" ]; then
+  plugins=(
+      sudo                              # 按两次 ESC 可在命令前面添加 sudo
+      zsh_reload                        # 提供 src 命令用于重载 zsh 配置
+      zsh-navigation-tools              # CTRL+R 可打开 history 面板，功能很多很强大
+      zsh-autosuggestions               # 自动建议
+      zsh-syntax-highlighting           # 命令着色
+      sublime                           # st 可打开给定文件，stt 可将当前所在文件夹发送到 sublime
+      git-open                          # 在 git 目录下通过 git open 在浏览器打开项目的 GitHub 页面
+      # zsh-nvm
+  )
+else
+  plugins=(
+      sudo                              # 按两次 ESC 可在命令前面添加 sudo
+      zsh_reload                        # 提供 src 命令用于重载 zsh 配置
+      zsh-navigation-tools              # CTRL+R 可打开 history 面板，功能很多很强大
+      zsh-autosuggestions               # 自动建议
+      zsh-syntax-highlighting           # 命令着色
+      git-open                          # 在 git 目录下通过 git open 在浏览器打开项目的 GitHub 页面
+      # zsh-nvm
+  )
+fi
 # Powerlevel9k --------------------------------------------------------------- #
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="nerdfont-complete"
 
-# 修改Homebrew Bottles源
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
-
-# brew 不自动更新
-export HOMEBREW_NO_AUTO_UPDATE=true
+if [ "$(uname)" = "Darwin" ]; then
+  # 修改Homebrew Bottles源
+  export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+  # brew 不自动更新
+  export HOMEBREW_NO_AUTO_UPDATE=true
+fi
 
 function pp(){
     STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
     if [ $STATUS_CODE != 200 ]; then
-        read 'proxy_ip?当前为河蟹模式模式，输入代理IP:'
+        read 'proxy_ip?当前为河蟹模式，输入代理IP:'
         export {http,https}_proxy=http://$proxy_ip:7890
         export all_proxy=socks5://$proxy_ip:7891
         STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
@@ -56,10 +76,10 @@ function pp(){
 
 function prompt_my_proxy_status(){
     if [ -z $all_proxy ]; then
-        p10k segment -f red -t "🇨🇳  河蟹"
+        p10k segment -f yellow -t "🇨🇳  河蟹"
     else
         if [ $all_proxy = '' ]; then
-            p10k segment -f red -t "🇨🇳  河蟹"
+            p10k segment -f yellow -t "🇨🇳  河蟹"
         else
             p10k segment -f green -t "🌏 代理"
         fi
@@ -69,15 +89,23 @@ function prompt_my_proxy_status(){
 
 # Prompt segments
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    os_icon user dir_writable dir
-    newline my_proxy_status status vcs
+    background_jobs command_execution_time virtualenv ip time
+    newline os_icon user dir_writable dir
+    newline status vcs
 )
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    # node_version custom_dev time host custom_info newline
-      # php_version_joined symfony2_version_joined laravel_version_joined
-      # swift_version_joined go_version_joined rust_version_joined
-    # load battery_joined disk_usage_joined ram_joined custom_hardware
+    load battery_joined disk_usage_joined ram_joined custom_hardware newline
+    my_proxy_status custom_dev host  custom_info
+#     node_version custom_dev time host custom_info newline
+#       php_version_joined symfony2_version_joined laravel_version_joined
+#       swift_version_joined go_version_joined rust_version_joined
+#     load battery_joined disk_usage_joined ram_joined custom_hardware
 )
+
+# Trims down prompt to show only on current line
+# POWERLEVEL9K_TRANSIENT_PROMPT=same-dir
+POWERLEVEL9K_TRANSIENT_PROMPT=always
+
 ZLE_RPROMPT_INDENT=0 # Fix final space for right prompt
 # Left prompt ---------------------------------------------------------------- #
 # OS icon
@@ -117,89 +145,89 @@ POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=$COLOR_BLACK
 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=$COLOR_WARNING
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=$COLOR_BLACK
 # Right prompt --------------------------------------------------------------- #
-# # Host
-# POWERLEVEL9K_HOST_ICON=$'\uF823' # 
-# POWERLEVEL9K_SSH_ICON=$'\uF489' # 
-# POWERLEVEL9K_HOST_LOCAL_FOREGROUND=$COLOR_STRING
-# POWERLEVEL9K_HOST_LOCAL_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_HOST_REMOTE_FOREGROUND=$COLOR_STRING
-# POWERLEVEL9K_HOST_REMOTE_BACKGROUND=$COLOR_BLACK
-# # Custom info
-# POWERLEVEL9K_CUSTOM_INFO="echo $'\uf05a '" # 
-# POWERLEVEL9K_CUSTOM_INFO_BACKGROUND=$COLOR_STRING
-# POWERLEVEL9K_CUSTOM_INFO_FOREGROUND=$COLOR_BLACK
-# # Custom hardware
-# POWERLEVEL9K_CUSTOM_HARDWARE="echo $'\uf0ad '" # 
-# POWERLEVEL9K_CUSTOM_HARDWARE_BACKGROUND=$COLOR_STRING
-# POWERLEVEL9K_CUSTOM_HARDWARE_FOREGROUND=$COLOR_BLACK
-# # Custom dev
-# POWERLEVEL9K_CUSTOM_DEV="echo $'\uF121 '" # </>
-# POWERLEVEL9K_CUSTOM_DEV_BACKGROUND=$COLOR_STRING
-# POWERLEVEL9K_CUSTOM_DEV_FOREGROUND=$COLOR_BLACK
-# # Versions
-# POWERLEVEL9K_NODE_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_NODE_VERSION_FOREGROUND=$COLOR_PRIMARY
-# POWERLEVEL9K_PHP_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_PHP_VERSION_FOREGROUND="steelblue1"
-# POWERLEVEL9K_PHP_VERSION_VISUAL_IDENTIFIER_EXPANSION=$'\uE608 ' # 
-# POWERLEVEL9K_LARAVEL_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_LARAVEL_VERSION_FOREGROUND="orangered1"
-# POWERLEVEL9K_SYMFONY2_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_SYMFONY2_VERSION_FOREGROUND="white"
-# POWERLEVEL9K_JAVA_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_JAVA_VERSION_FOREGROUND="red3a"
-# POWERLEVEL9K_GO_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_GO_VERSION_FOREGROUND="darkslategray2"
-# POWERLEVEL9K_RUST_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_RUST_VERSION_FOREGROUND="lightgoldenrod3"
-# POWERLEVEL9K_SWIFT_VERSION_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_SWIFT_VERSION_FOREGROUND="darkorange"
-# # Background Jobs
-# POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$COLOR_BLACK
-# POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='lightgoldenrod3'
-# # Time
-# POWERLEVEL9K_TIME_ICON=""
-# POWERLEVEL9K_TIME_FOREGROUND=$COLOR_BLACK
-# POWERLEVEL9K_TIME_BACKGROUND=$COLOR_STRING
-# POWERLEVEL9K_TIME_FORMAT="%D{"$'\uf017'" %H:%M "$'\uf073'" %d/%m}" #  
-# # Load
-# POWERLEVEL9K_LOAD_CRITICAL_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=$COLOR_ERROR
-# POWERLEVEL9K_LOAD_WARNING_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_LOAD_WARNING_FOREGROUND=$COLOR_WARNING
-# POWERLEVEL9K_LOAD_NORMAL_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=$COLOR_OK
-# POWERLEVEL9K_LOAD_CRITICAL_VISUAL_IDENTIFIER_COLOR=$COLOR_ERROR
-# POWERLEVEL9K_LOAD_WARNING_VISUAL_IDENTIFIER_COLOR=$COLOR_WARNING
-# POWERLEVEL9K_LOAD_NORMAL_VISUAL_IDENTIFIER_COLOR=$COLOR_OK
-# # Ram
-# POWERLEVEL9K_RAM_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_RAM_FOREGROUND=$COLOR_WARNING
-# # Ip
-# POWERLEVEL9K_IP_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_IP_FOREGROUND=$COLOR_COMMENT
-# # Public ip
-# POWERLEVEL9K_PUBLIC_IP_NONE="offline"
-# POWERLEVEL9K_PUBLIC_IP_NONE_FOREGROUND=$COLOR_ERROR
-# POWERLEVEL9K_PUBLIC_IP_HOST="http://ident.me"
-# # Disk usage
-# POWERLEVEL9K_DISK_USAGE_NORMAL_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=$COLOR_OK
-# POWERLEVEL9K_DISK_USAGE_WARNING_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=$COLOR_WARNING
-# POWERLEVEL9K_DISK_USAGE_CRITICAL_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=$COLOR_ERROR
-# # Battery
-# POWERLEVEL9K_BATTERY_LOW_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_BATTERY_LOW_FOREGROUND=$COLOR_ERROR
-# POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND=$COLOR_WARNING
-# POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND=$COLOR_OK
-# POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND=$COLOR_BLACK
-# POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND=$COLOR_OK
-# POWERLEVEL9K_BATTERY_VERBOSE="false"
-# POWERLEVEL9K_BATTERY_STAGES=($'\uf244 ' $'\uf243 ' $'\uf242 ' $'\uf241 ' $'\uf240 ') # 
+# Host
+POWERLEVEL9K_HOST_ICON=$'\uF823' # 
+POWERLEVEL9K_SSH_ICON=$'\uF489' # 
+POWERLEVEL9K_HOST_LOCAL_FOREGROUND=$COLOR_STRING
+POWERLEVEL9K_HOST_LOCAL_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_HOST_REMOTE_FOREGROUND=$COLOR_STRING
+POWERLEVEL9K_HOST_REMOTE_BACKGROUND=$COLOR_BLACK
+# Custom info
+POWERLEVEL9K_CUSTOM_INFO="echo $'\uf05a '" # 
+POWERLEVEL9K_CUSTOM_INFO_BACKGROUND=$COLOR_STRING
+POWERLEVEL9K_CUSTOM_INFO_FOREGROUND=$COLOR_BLACK
+# Custom hardware
+POWERLEVEL9K_CUSTOM_HARDWARE="echo $'\uf0ad '" # 
+POWERLEVEL9K_CUSTOM_HARDWARE_BACKGROUND=$COLOR_STRING
+POWERLEVEL9K_CUSTOM_HARDWARE_FOREGROUND=$COLOR_BLACK
+# Custom dev
+POWERLEVEL9K_CUSTOM_DEV="echo $'\uF121 '" # </>
+POWERLEVEL9K_CUSTOM_DEV_BACKGROUND=$COLOR_STRING
+POWERLEVEL9K_CUSTOM_DEV_FOREGROUND=$COLOR_BLACK
+# Versions
+POWERLEVEL9K_NODE_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_NODE_VERSION_FOREGROUND=$COLOR_PRIMARY
+POWERLEVEL9K_PHP_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_PHP_VERSION_FOREGROUND="steelblue1"
+POWERLEVEL9K_PHP_VERSION_VISUAL_IDENTIFIER_EXPANSION=$'\uE608 ' # 
+POWERLEVEL9K_LARAVEL_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_LARAVEL_VERSION_FOREGROUND="orangered1"
+POWERLEVEL9K_SYMFONY2_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_SYMFONY2_VERSION_FOREGROUND="white"
+POWERLEVEL9K_JAVA_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_JAVA_VERSION_FOREGROUND="red3a"
+POWERLEVEL9K_GO_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_GO_VERSION_FOREGROUND="darkslategray2"
+POWERLEVEL9K_RUST_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_RUST_VERSION_FOREGROUND="lightgoldenrod3"
+POWERLEVEL9K_SWIFT_VERSION_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_SWIFT_VERSION_FOREGROUND="darkorange"
+# Background Jobs
+POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=$COLOR_BLACK
+POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='lightgoldenrod3'
+# Time
+POWERLEVEL9K_TIME_ICON=""
+POWERLEVEL9K_TIME_FOREGROUND=$COLOR_BLACK
+POWERLEVEL9K_TIME_BACKGROUND=$COLOR_STRING
+POWERLEVEL9K_TIME_FORMAT="%D{"$'\uf017'" %H:%M "$'\uf073'" %d/%m}" #  
+# Load
+POWERLEVEL9K_LOAD_CRITICAL_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=$COLOR_ERROR
+POWERLEVEL9K_LOAD_WARNING_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_LOAD_WARNING_FOREGROUND=$COLOR_WARNING
+POWERLEVEL9K_LOAD_NORMAL_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=$COLOR_OK
+POWERLEVEL9K_LOAD_CRITICAL_VISUAL_IDENTIFIER_COLOR=$COLOR_ERROR
+POWERLEVEL9K_LOAD_WARNING_VISUAL_IDENTIFIER_COLOR=$COLOR_WARNING
+POWERLEVEL9K_LOAD_NORMAL_VISUAL_IDENTIFIER_COLOR=$COLOR_OK
+# Ram
+POWERLEVEL9K_RAM_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_RAM_FOREGROUND=$COLOR_WARNING
+# Ip
+POWERLEVEL9K_IP_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_IP_FOREGROUND=$COLOR_COMMENT
+# Public ip
+POWERLEVEL9K_PUBLIC_IP_NONE="offline"
+POWERLEVEL9K_PUBLIC_IP_NONE_FOREGROUND=$COLOR_ERROR
+POWERLEVEL9K_PUBLIC_IP_HOST="http://ident.me"
+# Disk usage
+POWERLEVEL9K_DISK_USAGE_NORMAL_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=$COLOR_OK
+POWERLEVEL9K_DISK_USAGE_WARNING_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=$COLOR_WARNING
+POWERLEVEL9K_DISK_USAGE_CRITICAL_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=$COLOR_ERROR
+# Battery
+POWERLEVEL9K_BATTERY_LOW_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_BATTERY_LOW_FOREGROUND=$COLOR_ERROR
+POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND=$COLOR_WARNING
+POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND=$COLOR_OK
+POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND=$COLOR_BLACK
+POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND=$COLOR_OK
+POWERLEVEL9K_BATTERY_VERBOSE="false"
+POWERLEVEL9K_BATTERY_STAGES=($'\uf244 ' $'\uf243 ' $'\uf242 ' $'\uf241 ' $'\uf240 ') # 
 # Zsh Syntax colors ---------------------------------------------------------- #
 source $ZSH/oh-my-zsh.sh
 ZSH_HIGHLIGHT_STYLES[comment]='fg='$COLOR_COMMENTS
@@ -243,6 +271,8 @@ alias l="ls"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
+alias go="git-open"
+alias cat="bat"
 cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ll -A }
 mkcd() { mkdir -p "$1" && cd "$1" }
 # git
