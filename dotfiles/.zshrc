@@ -211,7 +211,7 @@ POWERLEVEL9K_MY_PROXY_STATUS_BACKGROUND=$COLOR_GREY19
 
 POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON="echo  `hostname |awk -F '.' '{print $1}'` "
 POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON_BACKGROUND='lightcoral'
-POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON_FOREGROUND='grey30'
+POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON_FOREGROUND='black'
 
 
 # Versions
@@ -308,8 +308,6 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg='$COLOR_COMMENTS
 # Aliases & functions -------------------------------------------------------- #
 # pretty ls (require lsd)
 command -v lsd &> /dev/null && alias ls="lsd"
-command -v bat &> /dev/null && alias cat="bat"
-command -v git-open &> /dev/null && alias go="git-open"
 lt() { lsd --tree --depth $1 2>/dev/null || lsd --tree --depth 1 }
 lta() { lsd --tree --depth $1 -A 2>/dev/null || lsd --tree --depth 1 -A }
 # pretty curl (require jq)
@@ -323,6 +321,8 @@ alias l="ls"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
+alias go="git-open"
+alias cat="bat"
 alias lsgp="ls | xargs -P10 -I{} git -C {} pull"
 cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ll -A }
 mkcd() { mkdir -p "$1" && cd "$1" }
