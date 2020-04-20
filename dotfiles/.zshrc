@@ -121,20 +121,21 @@ function prompt_my_proxy_status(){
 }
 
 function upgrade_custom() {
-  printf "${Info}Upgrading custom plugins\n"
+    printf "${Info}Upgrading custom plugins\n"
+    NowPwd=`pwd`
+    find "${ZSH_CUSTOM}" -type d -name .git | while read d
+    do
+        p=$(dirname "$d")
+        cd "${p}"
 
-  find "${ZSH_CUSTOM}" -type d -name .git | while read d
-  do
-    p=$(dirname "$d")
-    cd "${p}"
-
-    if git pull --rebase --stat origin master
-    then
-      printf "${Info}Hooray! $d has been updated and/or is at the current version.\n"
-    else
-      printf "${Error}There was an error updating. Try again later?\n"
-    fi
-  done
+        if git pull --rebase --stat origin master
+        then
+        printf "${Info}Hooray! $d has been updated and/or is at the current version.\n"
+        else
+        printf "${Error}There was an error updating. Try again later?\n"
+        fi
+    cd $NowPwd
+    done
 }
 
 
