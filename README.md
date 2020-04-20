@@ -94,7 +94,7 @@ git clone https://github.com/lukechilds/zsh-nvm $ZSH_CUSTOM/plugins/zsh-nvm
 ## ⚙️ My Zsh config
 
 ```bash
-cd && curl -fLo ".zshrc" https://github.com/miaborde/my-zsh/raw/master/dotfiles/.zshrc
+cd && curl -fLo ".zshrc" https://github.com/fengeek/my-zsh/raw/master/dotfiles/.zshrc
 ```
 
 ## ⚔️ Tmux
@@ -107,7 +107,7 @@ sudo apt install tmux
 # 🍎 OSX
 brew install tmux
 # ✌️ Then for all
-cd && curl -fLo ".tmux.conf" https://github.com/miaborde/my-zsh/raw/master/dotfiles/.tmux.conf
+cd && curl -fLo ".tmux.conf" https://github.com/fengeek/my-zsh/raw/master/dotfiles/.tmux.conf
 ```
 
 ## 🕹 Enjoy

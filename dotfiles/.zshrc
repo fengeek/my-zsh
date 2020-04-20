@@ -43,6 +43,7 @@ Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
 Error="${Red_font_prefix}[错误]${Font_color_suffix}"
 Tip="${Green_font_prefix}[注意]${Font_color_suffix}"
+
 # Oh-My-Zsh ------------------------------------------------------------------ #
 export ZSH="$HOME/.oh-my-zsh"
 # Plugins
@@ -69,16 +70,22 @@ else
   )
 fi
 # Powerlevel9k --------------------------------------------------------------- #
+
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
 POWERLEVEL9K_MODE="nerdfont-complete"
 
+# MacOS
 if [ "$(uname)" = "Darwin" ]; then
   # 修改Homebrew Bottles源
   export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
   # brew 不自动更新
   export HOMEBREW_NO_AUTO_UPDATE=true
+  # mmh配置文件目录
+  export MMH_CONFIG_DIR="/Users/feng/Library/Mobile Documents/com~apple~CloudDocs/MyFiles/mmh"
 fi
 
+# 一键代理
 function pp(){
     STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
     if [ $STATUS_CODE != 200 ]; then
@@ -100,6 +107,7 @@ function pp(){
     fi
 }
 
+# 自定义显示代理状态
 function prompt_my_proxy_status(){
     if [ -z $all_proxy ]; then
         p10k segment -f lightgoldenrod1 -t "🏠 宅家"
@@ -110,6 +118,23 @@ function prompt_my_proxy_status(){
             p10k segment -f darkseagreen4 -t "🔰 留学"
         fi
     fi
+}
+
+function upgrade_custom() {
+  printf "${Info}Upgrading custom plugins\n"
+
+  find "${ZSH_CUSTOM}" -type d -name .git | while read d
+  do
+    p=$(dirname "$d")
+    cd "${p}"
+
+    if git pull --rebase --stat origin master
+    then
+      printf "${Info}Hooray! $d has been updated and/or is at the current version.\n"
+    else
+      printf "${Error}There was an error updating. Try again later?\n"
+    fi
+  done
 }
 
 
@@ -148,6 +173,7 @@ POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%F{014}├─'   # ├─
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{014}╰─%F{cyan}\uF460%F{073}\uF460%F{109}\uF460%f "
 
 # Left prompt ---------------------------------------------------------------- #
+
 # GitHub icon
 POWERLEVEL9K_VCS_GIT_ICON=$'\uF408 '
 POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$'\uF408 '
@@ -210,7 +236,7 @@ POWERLEVEL9K_CUSTOM_DEV_BACKGROUND=$COLOR_CYAN
 POWERLEVEL9K_CUSTOM_DEV_FOREGROUND=$COLOR_BLACK
 # Custom proxy status
 POWERLEVEL9K_MY_PROXY_STATUS_BACKGROUND=$COLOR_GREY19
-
+# Custom elementary
 POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON="echo  `hostname |awk -F '.' '{print $1}'` "
 POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON_BACKGROUND='lightcoral'
 POWERLEVEL9K_CUSTOM_ELEMENTARY_ICON_FOREGROUND='black'
