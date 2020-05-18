@@ -138,6 +138,24 @@ function upgrade_custom() {
     done
 }
 
+function lsgp() {
+    printf "${Info}Upgrading current direction from git\n"
+    NowPwd=`pwd`
+    find . -type d -name .git | while read d
+    do
+        p=$(dirname "$d")
+        printf "${Info}Now For $d .\n"
+        cd "${p}"
+        if git pull --rebase --stat origin master
+        then
+        printf "${Info}Hooray! $d has been updated and/or is at the current version.\n"
+        else
+        printf "${Error}There was an error updating. Try again later?\n"
+        fi
+        cd $NowPwd
+    done
+}
+
 
 # Prompt segments
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
@@ -346,13 +364,14 @@ rcp() { rsync -avhW --progress $1 $2 }
 # shortcuts
 alias x="exit"
 alias c="clear"
+alias lc="locate"
 alias l="ls"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
 alias go="git-open"
 alias cat="bat"
-alias lsgp="ls | xargs -P10 -I{} git -C {} pull"
+# alias lsgp="ls | xargs -P10 -I{} git -C {} pull"
 cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ll -A }
 mkcd() { mkdir -p "$1" && cd "$1" }
 # git
