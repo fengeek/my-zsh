@@ -74,6 +74,8 @@ fi
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 POWERLEVEL9K_MODE="nerdfont-complete"
+# 开启docker ci功能
+export DOCKER_CLI_EXPERIMENTAL=enabled
 
 # MacOS
 if [ "$(uname)" = "Darwin" ]; then
