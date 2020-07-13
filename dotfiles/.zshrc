@@ -123,20 +123,21 @@ function prompt_my_proxy_status(){
 }
 
 function upgrade_custom() {
-    printf "${Info}Upgrading custom plugins\n"
+    printf "${Info}Upgrading custom zsh plugins\n"
     NowPwd=`pwd`
     find "${ZSH_CUSTOM}" -type d -name .git | while read d
     do
         p=$(dirname "$d")
         cd "${p}"
-
+        GitRepo=$(egrep 'url' .git/config|awk '{print $3}')
+        printf "${Info}Now For $GitRepo .\n"
         if git pull --rebase --stat origin master
         then
-        printf "${Info}Hooray! $d has been updated and/or is at the current version.\n"
+        printf "${Info}Hooray! $GitRepo has been updated and/or is at the current version.\n"
         else
         printf "${Error}There was an error updating. Try again later?\n"
         fi
-    cd $NowPwd
+        cd $NowPwd
     done
 }
 
@@ -146,11 +147,12 @@ function lsgp() {
     find . -type d -name .git | while read d
     do
         p=$(dirname "$d")
-        printf "${Info}Now For $d .\n"
         cd "${p}"
+        GitRepo=$(egrep 'url' .git/config|awk '{print $3}')
+        printf "${Info}Now For $GitRepo .\n"
         if git pull --rebase --stat origin master
         then
-        printf "${Info}Hooray! $d has been updated and/or is at the current version.\n"
+        printf "${Info}Hooray! $GitRepo has been updated and/or is at the current version.\n"
         else
         printf "${Error}There was an error updating. Try again later?\n"
         fi
