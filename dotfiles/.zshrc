@@ -84,6 +84,7 @@ if [ "$(uname)" = "Darwin" ]; then
   # brew 不自动更新
   export HOMEBREW_NO_AUTO_UPDATE=true
   # mmh配置文件目录
+  export PATH=$PATH:/Users/feng/Library/Mobile\ Documents/com~apple~CloudDocs/MyFiles/mmh/bin
   export MMH_CONFIG_DIR="/Users/feng/Library/Mobile Documents/com~apple~CloudDocs/MyFiles/mmh"
 fi
 
@@ -93,7 +94,7 @@ function pp(){
     if [ $STATUS_CODE != 200 ]; then
         read "proxy_ip?当前为宅家模式，输入代理IP:"
         export {http,https}_proxy=http://$proxy_ip:7890
-        export all_proxy=socks5://$proxy_ip:7891
+        export all_proxy=socks5://$proxy_ip:7890
         STATUS_CODE=$(curl -sL -m 5  www.google.com -o /dev/null -w "%{http_code}\n")
         if [ $STATUS_CODE != 200 ]; then
             echo -e "${Error}进入留学模式失败，请重新尝试"
@@ -112,10 +113,10 @@ function pp(){
 # 自定义显示代理状态
 function prompt_my_proxy_status(){
     if [ -z $all_proxy ]; then
-        p10k segment -f lightgoldenrod1 -t "🏠 宅家"
+        p10k segment -f lightgoldenrod1 -t "🏠 自学"
     else
         if [ $all_proxy = '' ]; then
-            p10k segment -f lightgoldenrod1 -t "🏠 宅家"
+            p10k segment -f lightgoldenrod1 -t "🏠 自学"
         else
             p10k segment -f darkseagreen4 -t "🔰 留学"
         fi
@@ -370,11 +371,11 @@ alias x="exit"
 alias c="clear"
 alias lc="locate"
 alias l="ls"
-alias la="ls -A"
+alias la="ls -lA"
 alias ll="ls -l"
 alias lla="ls -lA"
-alias go="git-open"
-alias cat="bat"
+command -v git-open &> /dev/null && alias gopen="git-open"
+command -v bat &> /dev/null && alias cat="bat --style=plain"
 # alias lsgp="ls | xargs -P10 -I{} git -C {} pull"
 cdp() { cd $YOUR_PROJECT_FOLDER"/$1" && ll -A }
 mkcd() { mkdir -p "$1" && cd "$1" }
