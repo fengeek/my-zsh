@@ -85,7 +85,7 @@ if [ "$(uname)" = "Darwin" ]; then
   export HOMEBREW_NO_AUTO_UPDATE=true
   # mmh配置文件目录
   export PATH=$PATH:/Users/feng/Library/Mobile\ Documents/com~apple~CloudDocs/MyFiles/mmh/bin
-  export MMH_CONFIG_DIR="/Users/feng/Library/Mobile Documents/com~apple~CloudDocs/MyFiles/mmh"
+  export MMH_CONFIG_DIR="/Users/feng/Library/Mobile Documents/com~apple~CloudDocs/MyFiles/mmh/conf"
 fi
 
 # 一键代理
